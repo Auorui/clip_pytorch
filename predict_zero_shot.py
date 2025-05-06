@@ -21,6 +21,6 @@ def zeroshot(image_path, text_language, model_pth):
 
 if __name__=="__main__":
     model_pth_path = r"E:\PythonProject\clip_pytorch\models\models_pth\ViT-B-16.pt"
-    image_path = "./CLIP.png"
-    text_language = ["a schematic photo", "a dog", "a black cat", "a handsome man"]
+    image_path = "./R_mAP.png"
+    text_language = ["two line charts", "a schematic diagram", "a landscape photo", "a oil painting"]
     zeroshot(image_path, text_language, model_pth_path)
