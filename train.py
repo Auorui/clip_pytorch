@@ -5,7 +5,7 @@ from tqdm import tqdm
 from copy import deepcopy
 import torch.nn as nn
 import numpy as np
-from utils import Flick8kDataset, Flick8kDataLoader, cross_modal_eval
+from utils import Flick8kDataset, Flick8kDataLoader
 from pyzjr import (load_owned_device, release_gpu_memory, AverageMeter, get_lr,
                    SeedEvery, show_config, loss_weights_dirs, get_optimizer,
                    redirect_console, multi_makedirs, LossHistory)
