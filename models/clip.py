@@ -206,8 +206,12 @@ def build_model(state_dict: dict):
     return model.eval()
 
 
-def train_clip_model(model_path):
+def train_clip_model(model_path, jit=True):
     device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
-    pretrained_dict = torch.jit.load(model_path, map_location=device)
-    model = build_model(pretrained_dict.state_dict())
+    if jit:
+        pretrained_dict = torch.jit.load(model_path, map_location=device)
+        model = build_model(pretrained_dict.state_dict())
+    else:
+        pretrained_dict = torch.load(model_path, map_location=device)
+        model = build_model(pretrained_dict)
     return model
