@@ -109,8 +109,6 @@ class CLIPTrainEpoch():
     def evaluate(self, val_loader, epoch):
         self.model.eval()
         val_losses = AverageMeter()
-        all_i2t = []
-        all_t2i = []
         with tqdm(total=len(val_loader), desc=f'Epoch {epoch}/{self.total_epoch}',
                   mininterval=0.3) as pbar:
             for batch in val_loader:
@@ -120,8 +118,6 @@ class CLIPTrainEpoch():
                     texts = texts.to(self.device)
                     logits_per_image, logits_per_text = self.model(images, texts)
                     # logits_per_text = logits_per_image.t()
-                    all_i2t.append(logits_per_image.cpu().numpy())
-                    all_t2i.append(logits_per_text.cpu().numpy())
                     labels = torch.arange(len(logits_per_image)).long().to(images.device)
                     loss_logits_per_image = self.loss_function(logits_per_image, labels)
                     loss_logits_per_text = self.loss_function(logits_per_text, labels)
@@ -130,17 +126,6 @@ class CLIPTrainEpoch():
 
                 pbar.set_postfix(**{'val_loss': val_losses.avg})
                 pbar.update(1)
-        scores_i2t = np.concatenate(all_i2t, axis=0)
-        scores_t2i = np.concatenate(all_t2i, axis=0)
-        metrics = cross_modal_eval(
-            scores_i2t=scores_i2t,
-            scores_t2i=scores_t2i,
-            txt2img=val_loader.dataset.txt_to_img,
-            img2txt=val_loader.dataset.img_to_txt,
-            k_values=(1, 5, 10)
-        )
-        from pprint import pprint
-        pprint(metrics)
         return val_losses.avg
 
     def save_models(self, save_dir, epoch, save_period, total_loss, val_loss, loss_history):

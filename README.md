@@ -21,10 +21,9 @@ CLIP属于是在跨模态训练无监督中的开山之作，收集了4亿数据
 权重下载，进入 models/clip_utils.py 选择要下载的权重即可，默认会下载到 models/models_pth 路径下，安装完成后可以选择在主目录下的 
 predict_zero_shot.py 文件进行zeroshot测试。测试结果大致如下所示：
 
-    Label probs: [[9.3211263e-01 6.5132879e-02 2.7000562e-03 5.4537690e-05]]
-    a schematic photo:	0.9321126341819763
-    image 0:	[('a schematic photo', 0.93211263), ('a dog', 0.06513288), ('a black cat', 0.0027000562), ('a handsome man', 5.453769e-05)]
-
+    Label probs: [[9.547376e-01 4.508087e-02 8`.620646e-05 9.542132e-05]]
+    two line charts: 0.9547376036643982
+    image 0: [('two line charts', 0.9547376), ('a schematic diagra`m', 0.04508087), ('a landscape photo', 8.620646e-05), ('a oil painting', 9.542132e-05)]
 flickr8k 数据集用的是 https://github.com/bubbliiiing/clip-pytorch 中的，只是我将原本的图片路径做了修改。
 比如在en_train.json文件中：
 
@@ -85,11 +84,12 @@ flickr8k数据集由数据图片路径与标注文本组成，其主要的结构
 运行后输入图片路径，运行predict.py进行检测。
 
 ## 推理步骤
-关于模型的推理，在 utils/metric.py 中进行了测试，并将其写在了 train.py 的模型推理当中，你可以运行这个文件进行简单的测试，
+关于模型的推理，在 utils/metric.py 中进行了测试，你可以运行这个文件进行简单的测试，
 我们提供了 Recall@K 和 mAP@K
 
 * Recall@K 衡量前K个结果是否包含正确答案 
 * mAP@K    衡量前K个结果的排序质量（考虑位置加权）
+![R_mAP.png](R_mAP.png)
 
 ## Reference
 https://github.com/openai/CLIP
