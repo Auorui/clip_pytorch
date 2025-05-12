@@ -78,6 +78,14 @@ flickr8k数据集由数据图片路径与标注文本组成，其主要的结构
     resume_training： 下载的权重路径 ViT-B-16、ViT-B/32等等
     dataset_path：    flickr8k数据集路径，本文为 E:\PythonProject\clip_pytorch\flickr8k
 
+我们这里不太推荐使用图像的数据增强，因为位置的变换会影响语言描述的准确性。
+
+    train_dataset = Flick8kDataset(
+        args.dataset_path,
+        target_shape=args.input_shape,
+        is_train=False,
+    )
+
 其他的参数默认或者简单修改即可，此外我们这里不推荐使用amp。
 
 ### c、训练结果预测   
